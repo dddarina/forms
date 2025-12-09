@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Поиск билетов</title>
+        <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>✈️</text></svg>">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="logo">
+                <i class="fas fa-plane-departure"></i>
+                <h1>Поиск билетов</h1>
+            </div>
+            <p class="tagline">Найдите лучшие предложения для вашего путешествия</p>
+        </header>
+
+        <main class="main-content">
+            <form class="search-form" id="searchForm">
+                <div class="form-section">
+                    <h2 class="section-title"><i class="fas fa-route"></i> Маршрут</h2>
+                    <div class="route-inputs">
+                        <div class="input-group">
+                            <label for="from">
+                                <i class="fas fa-map-marker-alt"></i>
+                                Откуда:
+                            </label>
+                            <div class="input-with-icon">
+                                <input type="text" id="from" placeholder="Город вылета" class="form-input">
+                                <i class="fas fa-exchange-alt swap-icon" id="swapRoutes" title="Поменять местами"></i>
+                            </div>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="to">
+                                <i class="fas fa-map-marker"></i>
+                                Куда:
+                            </label>
+                            <input type="text" id="to" placeholder="Город прилета" class="form-input">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h2 class="section-title"><i class="fas fa-users"></i> Пассажиры</h2>
+                    <div class="passenger-inputs">
+                        <div class="passenger-group">
+                            <div class="passenger-type">
+                                <i class="fas fa-user"></i>
+                                <span>Взрослые</span>
+                                <small>(12+ лет)</small>
+                            </div>
+                            <div class="counter">
+                                <button type="button" class="counter-btn minus" data-type="adults">-</button>
+                                <span class="counter-value" id="adultsCount">1</span>
+                                <button type="button" class="counter-btn plus" data-type="adults">+</button>
+                            </div>
+                        </div>
+
+                        <div class="passenger-group">
+                            <div class="passenger-type">
+                                <i class="fas fa-child"></i>
+                                <span>Дети до 10 лет</span>
+                            </div>
+                            <div class="counter">
+                                <button type="button" class="counter-btn minus" data-type="children">-</button>
+                                <span class="counter-value" id="childrenCount">0</span>
+                                <button type="button" class="counter-btn plus" data-type="children">+</button>
+                            </div>
+                        </div>
+
+                        <div class="passenger-group">
+                            <div class="passenger-type">
+                                <i class="fas fa-baby"></i>
+                                <span>Дети до 5 лет</span>
+                            </div>
+                            <div class="counter">
+                                <button type="button" class="counter-btn minus" data-type="infants">-</button>
+                                <span class="counter-value" id="infantsCount">0</span>
+                                <button type="button" class="counter-btn plus" data-type="infants">+</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h2 class="section-title"><i class="fas fa-calendar-alt"></i> Даты</h2>
+
+                    <div class="trip-type-toggle">
+                        <div class="toggle-option">
+                            <input type="radio" id="oneWay" name="tripType" value="oneWay" class="trip-type-radio">
+                            <label for="oneWay">
+                                <i class="fas fa-arrow-right"></i>
+                                Только туда
+                            </label>
+                        </div>
+
+                        <div class="toggle-option">
+                            <input type="radio" id="roundTrip" name="tripType" value="roundTrip" class="trip-type-radio"
+                                checked>
+                            <label for="roundTrip">
+                                <i class="fas fa-exchange-alt"></i>
+                                Туда и обратно
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="date-inputs">
+                        <div class="date-input-group">
+                            <label for="departureDate">
+                                <i class="fas fa-plane-departure"></i>
+                                Туда:
+                            </label>
+                            <div class="date-input-container">
+                                <input type="text" id="departureDate" class="date-input" readonly
+                                    placeholder="Выберите дату">
+                                <i class="fas fa-calendar calendar-icon"></i>
+                            </div>
+                            <div class="calendar-container" id="departureCalendar"></div>
+                        </div>
+
+                        <div class="date-input-group">
+                            <label for="returnDate">
+                                <i class="fas fa-plane-arrival"></i>
+                                Обратно:
+                            </label>
+                            <div class="date-input-container">
+                                <input type="text" id="returnDate" class="date-input" readonly
+                                    placeholder="Выберите дату">
+                                <i class="fas fa-calendar calendar-icon"></i>
+                            </div>
+                            <div class="calendar-container" id="returnCalendar"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <button type="submit" class="search-btn" id="searchBtn">
+                        <i class="fas fa-search"></i>
+                        Найти билеты
+                    </button>
+                </div>
+            </form>
+
+            <div class="selected-info" id="selectedInfo">
+                <h3><i class="fas fa-info-circle"></i> Выбранные даты:</h3>
+                <div class="info-content">
+                    <div class="info-item">
+                        <span class="info-label">Туда:</span>
+                        <span class="info-value" id="selectedDepartureDate">не выбрана</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Обратно:</span>
+                        <span class="info-value" id="selectedReturnDate">не выбрана</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Всего пассажиров:</span>
+                        <span class="info-value" id="totalPassengers">1</span>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+</body>
+
+</html>
